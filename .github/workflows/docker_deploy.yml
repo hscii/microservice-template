@@ -1,0 +1,69 @@
+name: Docker Deploy
+
+on:
+  push:
+    branches:
+      - main
+
+env:
+  GCP_PROJECT_ID: ${{ secrets.GCP_PROJECT_ID }}
+  GCP_REGION: ${{ secrets.GCP_REGION }}
+  GCP_SERVICE_NAME: ${{ secrets.GCP_SERVICE_NAME }}
+
+jobs:
+  build_and_deploy:
+    runs-on: ubuntu-latest
+    needs: [test]
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Authenticate with GCP
+        uses: google-github-actions/auth@v1
+        with:
+          credentials_json: ${{ secrets.GCP_SERVICE_ACCOUNT_KEY }}
+
+      - name: Configure gcloud CLI
+        run: |
+          gcloud config set project $GCP_PROJECT_ID
+          gcloud config set run/region $GCP_REGION
+
+      - name: Measure build time
+        id: build_time
+        run: |
+          START=$(date +%s)
+          docker build -t gcr.io/$GCP_PROJECT_ID/$GCP_SERVICE_NAME:latest .
+          END=$(date +%s)
+          echo "Build Time: $((END-START)) seconds"
+
+      - name: Push to GCR
+        run: |
+          docker tag gcr.io/$GCP_PROJECT_ID/$GCP_SERVICE_NAME:latest gcr.io/$GCP_PROJECT_ID/$GCP_SERVICE_NAME:latest
+          docker push gcr.io/$GCP_PROJECT_ID/$GCP_SERVICE_NAME:latest
+
+      - name: Deploy to Cloud Run
+        run: |
+          gcloud run deploy $GCP_SERVICE_NAME \
+            --image gcr.io/$GCP_PROJECT_ID/$GCP_SERVICE_NAME:latest \
+            --platform managed \
+            --allow-unauthenticated
+
+      - name: Test container startup time
+        id: startup_time
+        run: |
+          URL=$(gcloud run services describe $GCP_SERVICE_NAME --platform managed --format="value(status.url)")
+          START=$(date +%s)
+          until curl -s $URL/ping; do
+            sleep 1
+          done
+          END=$(date +%s)
+          echo "Startup Time: $((END-START)) seconds"
+
+      - name: Output build and startup times
+        run: |
+          echo "Build time: ${{ steps.build_time.outputs.result }} seconds"
+          echo "Startup time: ${{ steps.startup_time.outputs.result }} seconds"
