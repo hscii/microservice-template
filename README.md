@@ -2,6 +2,8 @@
 
 Simple, asynchronous, and efficient microservice using [`Rust ⇩`](https://www.rust-lang.org/tools/install), [Actix Web](https://actix.rs/docs/getting-started), and [`Docker ⇩`](https://docs.docker.com/engine/install/).
 
+JWT auth middleware: https://github.com/hscii/jwt-middleware-crate
+
 ## Running
 
 ### > Run Locally (Cargo)
