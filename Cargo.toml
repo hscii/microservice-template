@@ -5,3 +5,5 @@ edition = "2021"
 
 [dependencies]
 actix-web = {version = "4.9.0", features = ["macros"]}
+supabase-actix-auth_middleware = { git = "https://github.com/hscii/jwt-middleware-crate.git" }
+actix-web-httpauth = "0.8.2"
