@@ -14,7 +14,7 @@ cargo run
 
 ### > Run Containerized (Docker)
 
-To run this service in a Docker container, run the following:
+To run this service in a Docker container, use the following commmands:
 
 ```
 docker build -t rust-microservice-skeleton .
