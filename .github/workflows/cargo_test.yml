@@ -1,0 +1,23 @@
+name: Cargo Test
+
+on:
+  push:
+    branches:
+      - "*"
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Rust
+        uses: actions-rs/toolchain@v1
+        with:
+          toolchain: stable
+          override: true
+
+      - name: Run Cargo Tests
+        run: cargo test --verbose
