@@ -1,6 +1,6 @@
 name: Docker Deploy
 
-on:
+oon:
   push:
     branches:
       - main
@@ -30,7 +30,7 @@ jobs:
       - name: Configure gcloud CLI
         run: |
           gcloud config set project $GCP_PROJECT_ID
-          gcloud config set run/region $GCP_REGION
+          gcloud config set app/region $GCP_REGION
 
       - name: Measure build time
         id: build_time
@@ -45,19 +45,16 @@ jobs:
           docker tag gcr.io/$GCP_PROJECT_ID/$GCP_SERVICE_NAME:latest gcr.io/$GCP_PROJECT_ID/$GCP_SERVICE_NAME:latest
           docker push gcr.io/$GCP_PROJECT_ID/$GCP_SERVICE_NAME:latest
 
-      - name: Deploy to Cloud Run
+      - name: Deploy to App Engine Flexible
         run: |
-          gcloud run deploy $GCP_SERVICE_NAME \
-            --image gcr.io/$GCP_PROJECT_ID/$GCP_SERVICE_NAME:latest \
-            --platform managed \
-            --allow-unauthenticated
+          gcloud app deploy --image-url=gcr.io/$GCP_PROJECT_ID/$GCP_SERVICE_NAME:latest --project=$GCP_PROJECT_ID --quiet
 
-      - name: Test container startup time
+      - name: Test service startup time
         id: startup_time
         run: |
-          URL=$(gcloud run services describe $GCP_SERVICE_NAME --platform managed --format="value(status.url)")
+          URL=$(gcloud app describe --format="value(defaultHostname)")
           START=$(date +%s)
-          until curl -s $URL/ping; do
+          until curl -s $URL; do
             sleep 1
           done
           END=$(date +%s)
