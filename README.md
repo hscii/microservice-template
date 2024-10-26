@@ -23,7 +23,7 @@ docker build -t rust-microservice-skeleton .
 docker run --rm -p 8080:8080 rust-microservice-skeleton
 ```
 
-Note, replace:
+Replace the follwing:
 
 - `8080:8080` with your desired port mapping
 - `rust-microservice-skeleton` with your service name
@@ -35,3 +35,4 @@ To run all tests in the `/tests` directory:
 ```
 cargo test
 ```
+_Note, the default test initializes the server without the JWT auth middleware._
