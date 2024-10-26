@@ -1675,7 +1675,7 @@ checksum = "13c2bddecc57b384dee18652358fb23172facb8a2c51ccc10d74c157bdea3292"
 [[package]]
 name = "supabase-actix-auth_middleware"
 version = "0.1.0"
-source = "git+https://github.com/finnrw/supabase-actix-auth_middleware.git#e1b52ca50d48dbf01c27e40ff8103ddacc374093"
+source = "git+https://github.com/hscii/jwt-middleware-crate.git#e1b52ca50d48dbf01c27e40ff8103ddacc374093"
 dependencies = [
  "actix-web",
  "actix-web-httpauth",
