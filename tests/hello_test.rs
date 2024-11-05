@@ -1,5 +1,5 @@
 use actix_web::{test, App};
-use template::hello;
+use service::hello;
 
 #[actix_rt::test]
 async fn test_hello() {

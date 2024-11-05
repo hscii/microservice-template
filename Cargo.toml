@@ -1,5 +1,5 @@
 [package]
-name = "template"
+name = "service"
 version = "0.1.0"
 edition = "2021"
 
@@ -10,5 +10,5 @@ actix-web-httpauth = "0.8.2"
 actix-rt = "2.10.0"
 
 [lib]
-name = "template"
+name = "service"
 path = "src/main.rs"

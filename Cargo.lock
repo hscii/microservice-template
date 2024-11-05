@@ -1580,6 +1580,16 @@ dependencies = [
 ]
 
 [[package]]
+name = "service"
+version = "0.1.0"
+dependencies = [
+ "actix-rt",
+ "actix-web",
+ "actix-web-httpauth",
+ "supabase-actix-auth_middleware",
+]
+
+[[package]]
 name = "sha1"
 version = "0.10.6"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1707,16 +1717,6 @@ dependencies = [
  "proc-macro2",
  "quote",
  "unicode-ident",
-]
-
-[[package]]
-name = "template"
-version = "0.1.0"
-dependencies = [
- "actix-rt",
- "actix-web",
- "actix-web-httpauth",
- "supabase-actix-auth_middleware",
 ]
 
 [[package]]

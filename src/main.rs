@@ -7,7 +7,7 @@ use supabase_actix_auth_middleware::jwt_middleware;
 ///
 /// ```
 /// use actix_web::{test, App};
-/// use template::ping;
+/// use service::ping;
 ///
 /// #[actix_rt::test]
 /// async fn test_ping() {
