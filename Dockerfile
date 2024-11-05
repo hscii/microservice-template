@@ -1,8 +1,8 @@
 # Build
-FROM rust:1.72 AS builder
+FROM rust:latest AS builder
 WORKDIR /usr/src/template
 COPY . .
-RUN cargo install --path .
+RUN apt-get update && apt-get install -y cmake clang && cargo install --path .
 
 # Environment Initialization
 FROM debian:bookworm-slim

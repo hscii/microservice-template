@@ -1,25 +1,17 @@
+use actix_rt;
+use template::ping;
+
 #[cfg(test)]
 mod tests {
-    use actix_web::{test, App, HttpResponse, web};
+    use super::*;
+    use actix_web::{test, App};
 
-    async fn ping() -> HttpResponse {
-        HttpResponse::Ok().body("pong")
-    }
-
-    #[actix_web::test]
+    #[actix_rt::test]
     async fn test_ping() {
-        // Create the application service for testing.
-        let app = test::init_service(
-            App::new().route("/ping", web::get().to(ping))
-        )
-        .await;
-
-        // Send a test request to the /ping endpoint.
+        let app = test::init_service(App::new().service(ping)).await;
         let req = test::TestRequest::get().uri("/ping").to_request();
         let resp = test::call_service(&app, req).await;
-
-        // Assert the response status and body.
-        assert!(resp.status().is_success());
+        assert_eq!(resp.status(), 200);
         let body = test::read_body(resp).await;
         assert_eq!(body, "pong");
     }
