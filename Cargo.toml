@@ -8,3 +8,7 @@ actix-web = {version = "4", features = ["macros"]}
 supabase-actix-auth_middleware = { git = "https://github.com/hscii/jwt-middleware-crate.git" }
 actix-web-httpauth = "0.8.2"
 actix-rt = "2.10.0"
+
+[lib]
+name = "template"
+path = "src/main.rs"
