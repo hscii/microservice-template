@@ -1,4 +1,3 @@
-use actix_web::{get, web, HttpResponse, Responder};
 use actix_web::{App, HttpServer};
 use actix_web_httpauth::middleware::HttpAuthentication;
 use supabase_actix_auth_middleware::jwt_middleware;
