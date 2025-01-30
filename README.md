@@ -1,4 +1,4 @@
-# rust microservice-template
+# Rust microservice-template
 
 Simple asynchronous microservice using [`Rust ⇩`](https://www.rust-lang.org/tools/install), [Actix Web](https://actix.rs/docs/getting-started), and [`Docker ⇩`](https://docs.docker.com/engine/install/).
 
@@ -43,5 +43,3 @@ To run all tests in the `/tests` directory:
 ```
 cargo test
 ```
-
-_Note, the default test initializes the server without the JWT auth middleware._
